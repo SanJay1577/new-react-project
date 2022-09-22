@@ -1,89 +1,42 @@
-import { useEffect, useReducer, useState } from 'react';
+
+import { createContext,  useReducer } from 'react';
 import './App.css';
+import { Product1 } from './Product1';
+import { Product2 } from './Product2';
+import { reducer } from './reducer';
+import ForwardParent from './ReferenceComponent/ForwardParent';
+import { ResetProduct } from './ResetProduct';
 
-//having your reducer functionality - step 2
-function reducerFunction(state, action){
 
-  switch (action.type) {
-    case 'increment' :
-      return ({...state, count : state.count +1})
-      case 'decrement' :
-        return ({...state, count : state.count -1})
-      default:
+// const counterContext = createContext(null);
+export const CounteContext = createContext(null)
 
-  }
-
-}
 
 function App() {
+  // creating a state of reducers
+  const [state, dispatch] = useReducer(reducer, {counter: 25})
 
-
-
-
-  // const [count, setCount] = useState(0); 
-  // const [noncount, setNonCount] = useState(0);
-
-  // initial state with dispatch - step1
-  const [state, dispatch] = useReducer(reducerFunction, {count : 0})
-   
-
- //side effect 
-  useEffect(()=>{
-
-    
-    console.log("Mounted")
-
-    // This is just going to un mount your component and clean it
-    return () => {
-      console.log("unmonuting the component server")
-
-     
-    }; 
- 
-   }, []);
+   // const [state, setState] = useState("")
+return (
+  //creating a provider with values 
+<div> 
 
   
 
-  // const countFunction = () =>{
-  //   setCount(count+1); 
-  // }
+    <CounteContext.Provider value={[state, dispatch]}>
+          <Product1/>
+          <Product2/>
+          <ResetProduct/>
+    </CounteContext.Provider>
+  
 
-  // const nonCountFunction = () =>{
-  //   setNonCount(noncount+1); 
-  // }
-
-
-
-  return (
-   <div>
-    <div>
-       <p >Dependent Counter : {state.count}</p>
-
-       {/* passing your action */}
-
-      <button onClick={()=>dispatch({type :"increment"})}>+Add</button>
-      <button onClick={()=>dispatch({type :"decrement"})}>-Sub</button>
-
-      {/* <p className='clean'>Non Dependent Counter : {noncount}</p>
-      <button onClick={nonCountFunction}>Non Dependency Button</button> */}
-
-    </div>
+  <ForwardParent/>
+   
    </div>
   );
 }
 
 export default App;
-//  Brain stroming for new app
-// terminal codes
-// ##################
-// git clone https://github.com/SanJay1577/new-react-project.git
-// cd new-react-project
-// code . 
-// npm start
-// ###########
-// Reducer Steps 
-// Creating a initial state with dispatch 
-// having your reducer functinality
-// passing your action
-//############################
+
+
 
