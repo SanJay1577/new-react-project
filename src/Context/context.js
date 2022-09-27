@@ -1,13 +1,14 @@
 import { createContext } from "react";
 
  const counterContext = createContext(null);
-export {counterContext}; 
+ const wrapperContext = createContext(null)
+export {counterContext, wrapperContext}; 
 
 
 
 
 
-import React, {Fragment, useRef} from 'react';
+
  
 
  

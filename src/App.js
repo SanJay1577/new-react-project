@@ -1,6 +1,11 @@
 
-import { createContext,  useReducer } from 'react';
+import { useEffect } from 'react';
+import { createContext,  useCallback,  useReducer, useState } from 'react';
 import './App.css';
+import Memo from './Components/Memo';
+import Wrapping from './Components/Wrapping';
+import { wrapperContext } from './Context/context';
+import OptParent from './OptimizingComponents/OptParent';
 import { Product1 } from './Product1';
 import { Product2 } from './Product2';
 import { reducer } from './reducer';
@@ -12,9 +17,44 @@ import { ResetProduct } from './ResetProduct';
 export const CounteContext = createContext(null)
 
 
+
+
+
 function App() {
+
+    const [couter, setCouter] = useState(0); 
+    const [number, setNumber] = useState(0); 
+
+  const addCounter = useCallback((value)=>{
+    setCouter(couter + value) //5 11 13 14 21
+   }, [couter])
+
+   const subCounter = useCallback( (value)=>{
+       setCouter (couter - value)
+   }, [couter] )
+
+   const addNumber = useCallback(()=>{
+       setNumber (number + 1)
+   }, [number])
+
+
+useEffect(()=>{
+//batching and scheduling
+  addCounter(5);
+  console.log(`${couter}`)
+}, []);
+
+console.log(`${couter}`)
+ 
+
+
   // creating a state of reducers
-  const [state, dispatch] = useReducer(reducer, {counter: 25})
+  const [state, dispatch] = useReducer(reducer, 
+    {counter: 25, demo:"", datas:[], effectData:""}
+    )
+
+
+
 
    // const [state, setState] = useState("")
 return (
@@ -31,12 +71,35 @@ return (
   
 
   <ForwardParent/>
+
+
+   
+      <wrapperContext.Provider value={[state, dispatch]}>
+  
+      </wrapperContext.Provider>
+    
+
+     <h2>Optimizing the Parent</h2>
+     <OptParent />
+
+    <h3>Callback functionalities</h3>
+
+    <button
+         onClick={addCounter}
+         >couter +</button>
+         <button
+         onClick={subCounter}
+         >couter -</button>
+         <button
+         onClick={addNumber}
+         >Set number +</button>
+
+         <Memo/>
    
    </div>
   );
 }
 
 export default App;
-
 
 
