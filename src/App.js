@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import { createContext,  useCallback,  useReducer, useState } from 'react';
 import './App.css';
+import Main from './Components/Classes/Main';
 import Memo from './Components/Memo';
 import Wrapping from './Components/Wrapping';
 import { wrapperContext } from './Context/context';
@@ -95,6 +96,11 @@ return (
          >Set number +</button>
 
          <Memo/>
+
+         <div>
+          <h1>Classes</h1>
+          <Main type="Class"/>
+          </div>
    
    </div>
   );

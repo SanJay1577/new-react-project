@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-// export const Main = () => {
+// export const Main = (props) => {
 //   return (
 //     <div>Main</div>
 //   )
@@ -10,7 +10,7 @@ import React, { Component } from "react";
 export default class Main extends Component {
      render () {
         return (
-            <h1>Welcome to Class component</h1>
+            <h1>Welcome to {this.props.type} component</h1>
         )
      }
 }
